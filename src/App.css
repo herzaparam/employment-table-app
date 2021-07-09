@@ -43,7 +43,7 @@
   align-self: flex-end;
 }
 /* modal image */
-.modal-body {
+.modal-img {
   display: flex;
   justify-content: center;
   align-items: center;

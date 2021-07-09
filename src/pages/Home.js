@@ -66,7 +66,7 @@ function Home() {
         axios.delete(`${process.env.REACT_APP_API_TABLE}users/${id}`)
             .then((res) => {
                 alert("succesfully delete this list of employee")
-                getList()
+                getList("","")
             })
             .catch((err) => {
                 alert("cannot delete the list of employee")

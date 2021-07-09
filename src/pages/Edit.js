@@ -84,48 +84,50 @@ function Edit() {
             })
     }
 
-    const validate = () => {
-        if (form.firstname === "" || form.lastname === "" || form.phone === "" || form.position === "" || form.dob === "" || form.province === "" || form.city === "" || form.street === "" || form.ktpNumber === "" || form.image === "") {
-            setError(true)
-        }
-    }
+
 
     const handleUpdate = async (id) => {
-        await validate()
-        const formData = new FormData();
-        formData.append('firstname', form.firstname)
-        formData.append('lastname', form.lastname)
-        formData.append('phone', form.phone)
-        formData.append('position', form.position)
-        formData.append('dob', form.dob)
-        formData.append('province', form.province)
-        formData.append('city', form.city)
-        formData.append('street', form.street)
-        formData.append('ktpNumber', form.ktpNumber)
-        formData.append('image', form.image)
-        axios.put(`${process.env.REACT_APP_API_TABLE}users/update-profile/${id}`, formData)
-            .then((res) => {
-                getPersonData(id)
-                toast.success('Succesfully update this employee!', {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }).catch((err) => {
-                toast.error('failed to update data!', {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            })
+        if (form.firstname !== "" && form.lastname !== "" && form.ktpNumber !== "" && form.image !== "") {
+            const formData = new FormData();
+            formData.append('firstname', form.firstname)
+            formData.append('lastname', form.lastname)
+            formData.append('phone', form.phone)
+            formData.append('position', form.position)
+            formData.append('bankAccount', form.bankAccount)
+            formData.append('accountNumber', form.accountNumber)
+            formData.append('zipCode', form.zipCode)
+            formData.append('dob', form.dob)
+            formData.append('province', form.province)
+            formData.append('city', form.city)
+            formData.append('street', form.street)
+            formData.append('ktpNumber', form.ktpNumber)
+            formData.append('image', form.image)
+            axios.put(`${process.env.REACT_APP_API_TABLE}users/update-profile/${id}`, formData)
+                .then((res) => {
+                    getPersonData(id)
+                    toast.success('Succesfully update this employee!', {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }).catch((err) => {
+                    toast.error('failed to update data!', {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                })
+        } else {
+            setError(true)
+        }
     }
     useEffect(() => {
         getProvince()
@@ -164,7 +166,7 @@ function Edit() {
             </div>
             <div className="input-group mb-3">
                 <label htmlFor="firstname" className="form-label">Phone Number</label>
-                <input type="text" className="form-control" id="phone" value={form.phone} aria-describedby="basic-addon3" onChange={e => handleChange(e)} />
+                <input type="number" className="form-control" id="phone" value={form.phone} aria-describedby="basic-addon3" onChange={e => handleChange(e)} />
             </div>
             <div className="input-group mb-3">
                 <label htmlFor="basic-url" className="form-label" >Position</label>
@@ -175,6 +177,20 @@ function Edit() {
                     <option value="Staff">Staff</option>
                     <option value="Designer">Designer</option>
                 </select>
+            </div>
+            <div className="input-group mb-3">
+                <label htmlFor="basic-url" className="form-label" >Bank Account</label>
+                <select className="form-select" aria-label="Default select example" id="bankAccount" onChange={e => handleChange(e)}>
+                    <option defaultValue>Select</option>
+                    <option value="BCA">BCA</option>
+                    <option value="BNI">BNI</option>
+                    <option value="BRI">BRI</option>
+                    <option value="MANDIRI">MANDIRI</option>
+                </select>
+            </div>
+            <div className="input-group mb-3">
+                <label htmlFor="lastname" className="form-label">Account Number</label>
+                <input type="text" className="form-control" id="accountNumber" value={form.accountNumber} aria-describedby="basic-addon3" onChange={e => handleChange(e)} />
             </div>
             <div className="input-group mb-3">
                 <label htmlFor="dob" className="form-label">Date Of Birth</label>
@@ -201,6 +217,10 @@ function Edit() {
             <div className="input-group mb-3">
                 <label htmlFor="street" className="form-label">Street</label>
                 <textarea className="form-control" aria-label="With textarea" id="street" value={form.street} onChange={e => handleChange(e)}></textarea>
+            </div>
+            <div className="input-group mb-3">
+                <label htmlFor="lastname" className="form-label">ZIP code</label>
+                <input type="number" className="form-control" id="zipCode" value={form.zipCode} aria-describedby="basic-addon3" onChange={e => handleChange(e)} />
             </div>
             <div className="input-group mb-3">
                 <label htmlFor="ktpNumber" className="form-label">KTP Number</label>
