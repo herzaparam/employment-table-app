@@ -45,7 +45,7 @@ function ModalInsert({ getList, province }) {
     }
 
     const validate = () => {
-        if (form.firstname === "" || form.lastname === "" || form.dob === "" || form.province === "" || form.city === "" || form.street === "" || form.ktpNumber === "" || form.ktpFile === "") {
+        if (form.firstname === "" || form.lastname === "" || form.dob === "" || form.province === "" || form.city === "" || form.street === "" || form.ktpNumber === "" || form.image === "") {
             setError(true)
         }
     }
@@ -148,7 +148,7 @@ function ModalInsert({ getList, province }) {
                             <select className="form-select" aria-label="Default select example" id="city" value={form.city} onChange={e => handleChange(e)}>
                                 <option defaultValue>Select City..</option>
                                 {city.map((item) => {
-                                    return <option value={item.id} key={item.id}>{item.nama}</option>
+                                    return <option value={item.nama} key={item.id}>{item.nama}</option>
                                 })}
                             </select>
                         </div>

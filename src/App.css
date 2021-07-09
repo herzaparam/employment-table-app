@@ -23,6 +23,35 @@
   width: 16px;
 }
 
+/* edit page */
+.cont-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: min-content;
+  padding: 4em 16em;
+}
+.cont-edit > h2 {
+  margin-bottom: 1em;
+}
+.my-btn {
+  align-self: flex-start;
+}
+.my-btn-1 {
+  width: 15rem;
+  align-self: flex-end;
+}
+/* modal image */
+.modal-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-body > img {
+  max-width: 100%;
+}
+
 /* modal */
 .form-label {
   display: flex;

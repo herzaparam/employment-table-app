@@ -10,7 +10,7 @@ import Pagination from '../components/Pagination';
 function Home() {
     const history = useHistory();
 
-
+    const [selectedImage, SetSelectedImage] = useState(null)
     const [province, setProvince] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [postPerPage, setPostPerPage] = useState(4)
@@ -26,14 +26,21 @@ function Home() {
             [e.target.name]: e.target.value
         })
     }
-
-    const getList = () => {
-        axios.get(`${process.env.REACT_APP_API_TABLE}users/find-all/`)
+    const getList = (name, position) => {
+        axios.get(`${process.env.REACT_APP_API_TABLE}users/find-all/?position=${position}&keyword=${name}&page=1&perPage=100`)
             .then((res) => {
                 setList(res.data.data)
             })
             .catch((err) => {
-                alert("cannot find the list of employee")
+                toast.warn('can not get list of employee', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    });
             })
     }
 
@@ -47,11 +54,10 @@ function Home() {
             })
     }
 
-   
-
     useEffect(() => {
-        getList()
+        getList(search.name, search.position)
     }, [search])
+
     useEffect(() => {
         getProvince()
     }, [])
@@ -71,9 +77,9 @@ function Home() {
     const indexOfLastPost = currentPage * postPerPage;
     const indexOfFirsPost = indexOfLastPost - postPerPage;
     const currentList = list.slice(indexOfFirsPost, indexOfLastPost);
-
+    
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
-
+  
     return (
         <div className="app">
             <ToastContainer
@@ -102,11 +108,11 @@ function Home() {
                 </div>
                 <div className="d-grid gap-2 d-md-flex justify-content-md-end m-4">
                     <button className="btn btn-secondary me-md-2" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Insert Employee</button>
-                    <ModalInsert getList={getList} province={province}/>
+                    <ModalInsert getList={getList} province={province} />
                 </div>
             </header>
             <main className="container-fluid mb-3">
-                <ModalImage />
+                <ModalImage image={selectedImage}/>
                 <table className="table table-success table-striped">
                     <thead>
                         <tr>
@@ -129,7 +135,7 @@ function Home() {
                                     <td className="align-middle">{person.street}, {person.city}. {person.province}</td>
                                     <td className="align-middle">{person.position !== "" ? person.position : "not set"}</td>
                                     <td>
-                                        <button type="button" className="btn btn-link" data-bs-toggle="modal" data-bs-target="#ModalImage" data-bs-whatever="displayimage">image</button></td>
+                                        <button type="button" className="btn btn-link" data-bs-toggle="modal" data-bs-target="#ModalImage" data-bs-whatever="displayimage" onClick={e => SetSelectedImage(person.image)}>image</button></td>
                                     <td>
                                         <button type="button" className="btn btn-info mx-1" onClick={e => history.push(`/edit/${person.id}`)}>
                                             <svg xmlns="http://www.w3.org/2000/svg" className="icon" viewBox="0 0 20 20" fill="currentColor">

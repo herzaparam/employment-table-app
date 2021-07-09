@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ModalImage() {
+function ModalImage({image}) {
     return (
         <div className="modal fade" id="ModalImage" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
@@ -10,11 +10,10 @@ function ModalImage() {
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
-                        ...
+                        <img src={`${process.env.REACT_APP_API_IMG}${image}`} alt="KTP photo" />
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" className="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
